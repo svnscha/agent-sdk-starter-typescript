@@ -1,4 +1,4 @@
-# Agent SDK starter
+# Agent SDK starter for TypeScript
 
 A small TypeScript starting point for programmable Claude sessions.
 `agent.ts` exports `runAgent(prompt, options)` and runs a greeting when launched directly.
@@ -27,8 +27,8 @@ npm start
 Or in Docker:
 
 ```sh
-docker build -t agent-sdk-starter .
-docker run --rm --env-file .env agent-sdk-starter
+docker build -t agent-sdk-starter-typescript .
+docker run --rm --env-file .env agent-sdk-starter-typescript
 ```
 
 Expect `Hello from the Agent SDK.`. This makes a model request using your
@@ -45,3 +45,5 @@ activity, retries, and errors to the terminal or Docker logs. Import
 An optional third argument receives the SDK's final result, including
 `total_cost_usd`, before success or error handling. This is an estimated USD cost,
 not a billing amount. If the session ends without a result, the callback isn't called.
+
+Prefer Python? Use [agent-sdk-starter-python](https://github.com/svnscha/agent-sdk-starter-python).
