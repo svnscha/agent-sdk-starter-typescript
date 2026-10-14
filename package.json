@@ -10,6 +10,6 @@
     "start": "node --env-file-if-exists=.env agent.ts"
   },
   "dependencies": {
-    "@anthropic-ai/claude-agent-sdk": "0.3.299"
+    "@anthropic-ai/claude-agent-sdk": "0.3.300"
   }
 }
