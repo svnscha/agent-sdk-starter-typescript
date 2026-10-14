@@ -1,12 +1,2 @@
 node_modules/
-dist/
 .env
-.env.*
-!.env.example
-dumps/*
-!dumps/.gitkeep
-reports/*
-!reports/.gitkeep
-.work/
-/VERIFICATION.md
-workflows/triage.before-lesson.txt
