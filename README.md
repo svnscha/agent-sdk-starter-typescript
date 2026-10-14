@@ -37,3 +37,7 @@ subscription allowance or API credits. Keep `.env` private.
 To build a workflow, import `runAgent` in your own TypeScript file and supply
 the prompt, MCP tools, and optional structured-output schema. Node 24 runs
 TypeScript directly; there's no compiler or build step.
+
+An optional third argument receives the SDK's final result, including
+`total_cost_usd`, before success or error handling. This is an estimated USD cost,
+not a billing amount. If the session ends without a result, the callback isn't called.

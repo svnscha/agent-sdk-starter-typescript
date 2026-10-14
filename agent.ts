@@ -1,9 +1,17 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { query, type Options } from "@anthropic-ai/claude-agent-sdk";
+import {
+  query,
+  type Options,
+  type SDKResultMessage,
+} from "@anthropic-ai/claude-agent-sdk";
 
-export async function runAgent(prompt: string, options: Options = {}) {
+export async function runAgent(
+  prompt: string,
+  options: Options = {},
+  onResult?: (result: SDKResultMessage) => void,
+) {
   const token = process.env.CLAUDE_CODE_OAUTH_TOKEN?.trim();
   const key = process.env.ANTHROPIC_API_KEY?.trim();
   if (Boolean(token) === Boolean(key))
@@ -44,6 +52,7 @@ export async function runAgent(prompt: string, options: Options = {}) {
       },
     })) {
       if (message.type !== "result") continue;
+      onResult?.(message);
       if (message.subtype !== "success" || message.is_error) {
         throw new Error(
           message.subtype === "success"
