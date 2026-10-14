@@ -14,8 +14,11 @@ export async function runAgent(
 ) {
   const token = process.env.CLAUDE_CODE_OAUTH_TOKEN?.trim();
   const key = process.env.ANTHROPIC_API_KEY?.trim();
-  if (Boolean(token) === Boolean(key))
+  if (Boolean(token) === Boolean(key)) {
     throw new Error("Set exactly one Claude credential in .env.");
+  }
+
+  // Keep each session's workspace and Claude config separate from personal settings.
   const workspace = await mkdtemp(path.join(os.tmpdir(), "agent-sdk-"));
   const controller = options.abortController ?? new AbortController();
   const timer = setTimeout(() => controller.abort(), 300_000);
@@ -51,7 +54,11 @@ export async function runAgent(
         abortController: controller,
       },
     })) {
-      if (message.type !== "result") continue;
+      if (message.type !== "result") {
+        continue;
+      }
+
+      // Failed sessions can still incur cost, so report usage before throwing.
       onResult?.(message);
       if (message.subtype !== "success" || message.is_error) {
         throw new Error(
@@ -69,5 +76,6 @@ export async function runAgent(
   }
 }
 
-if (import.meta.main)
+if (import.meta.main) {
   console.log(await runAgent("Reply with: Hello from the Agent SDK."));
+}
